@@ -46,6 +46,7 @@ public class ExcelUtil {
                 for (int i = 1; i <= rsRows; i++) {
                     Object[] obj = new Object[rsColumns];
                     Row row = readsheet.getRow(i);
+                    if (null == row) continue;
                     Iterator<Cell> iterator = row.cellIterator();
                     while (iterator.hasNext()) {
                         Cell cell = iterator.next();

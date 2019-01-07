@@ -15,10 +15,11 @@ import java.util.List;
 public class ExcelTest {
 
     public static void main(String[] args) {
-        String filePath = "D:\\handoverListModel.xlsx";
+        String filePath = "D:\\pl.xlsx";
         List<Object[]> list = ExcelUtil.resolveExcel(filePath);
         System.out.println(list.size());
-        String str = (String) list.get(0)[5];
+        String str = (String) list.get(0)[0];
+        System.out.println(str);
         String[] replaceAll = str.replaceAll("；|;|\\\\n", ",").split(",");
         for (int i = 0; i < replaceAll.length; i++) {
             String[] trim = replaceAll[i].trim().replaceAll(" +", ",").split(",");

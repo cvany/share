@@ -53,4 +53,24 @@ public class DemoTest {
         }
         return date;
     }
+
+    @Test
+    public void test4() {
+        double precision = 2e-10; //浮点类型计算时候与0比较时候的容差
+        System.out.println(precision);
+    }
+
+    @Test
+    public void test5() {
+        try {
+            int a = 1;
+            if (1 == a) {
+                int i = a / 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            System.out.println("这里还执行吗");
+        }
+    }
 }
