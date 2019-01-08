@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2005-2018. 4PX and/or its affiliates. All rights reserved.
- * Use,Copy is subject to authorized license.
- */
+
 package com.fpx.pds.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

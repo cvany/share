@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2005-2018. 4PX and/or its affiliates. All rights reserved.
- * Use,Copy is subject to authorized license.
- */
+
 package com.fpx.pds.utils;
 
 import com.alibaba.fastjson.JSON;
@@ -29,7 +26,7 @@ public class AlgoriUtil {
      * @param json
      * @return
      */
-    public static boolean isInPolygon(String lng, String lat, String json) {
+    public static boolean isInPg(String lng, String lat, String json) {
         // 将要判断的横纵坐标组成一个点
         Point2D.Double point = new Point2D.Double(Double.parseDouble(lng), Double.parseDouble(lat));
         List<Map> listPoint = JSON.parseArray(json, Map.class);
