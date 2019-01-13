@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpx.pds.wms.dao.RuleMapper">
+  <resultMap id="BaseResultMap" type="com.fpx.pds.wms.domain.Rule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="groupId" jdbcType="INTEGER" property="groupid" />
+    <result column="personId" jdbcType="INTEGER" property="personid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="weekStatus" jdbcType="VARCHAR" property="weekstatus" />
+    <result column="weekendStatus" jdbcType="VARCHAR" property="weekendstatus" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="modifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, groupId, personId, name, weekStatus, weekendStatus, createTime, modifyTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fpx.pds.wms.domain.Rule">
+    insert into rule (id, groupId, personId, 
+      name, weekStatus, weekendStatus, 
+      createTime, modifyTime)
+    values (#{id,jdbcType=INTEGER}, #{groupid,jdbcType=INTEGER}, #{personid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{weekstatus,jdbcType=VARCHAR}, #{weekendstatus,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fpx.pds.wms.domain.Rule">
+    insert into rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="groupid != null">
+        groupId,
+      </if>
+      <if test="personid != null">
+        personId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="weekstatus != null">
+        weekStatus,
+      </if>
+      <if test="weekendstatus != null">
+        weekendStatus,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="modifytime != null">
+        modifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupid != null">
+        #{groupid,jdbcType=INTEGER},
+      </if>
+      <if test="personid != null">
+        #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weekstatus != null">
+        #{weekstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendstatus != null">
+        #{weekendstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fpx.pds.wms.domain.Rule">
+    update rule
+    <set>
+      <if test="groupid != null">
+        groupId = #{groupid,jdbcType=INTEGER},
+      </if>
+      <if test="personid != null">
+        personId = #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weekstatus != null">
+        weekStatus = #{weekstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendstatus != null">
+        weekendStatus = #{weekendstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fpx.pds.wms.domain.Rule">
+    update rule
+    set groupId = #{groupid,jdbcType=INTEGER},
+      personId = #{personid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      weekStatus = #{weekstatus,jdbcType=VARCHAR},
+      weekendStatus = #{weekendstatus,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
