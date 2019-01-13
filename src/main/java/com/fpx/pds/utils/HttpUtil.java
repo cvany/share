@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2005-2018. 4PX and/or its affiliates. All rights reserved.
- * Use,Copy is subject to authorized license.
- */
+
 package com.fpx.pds.utils;
 
 import org.springframework.http.converter.HttpMessageConverter;

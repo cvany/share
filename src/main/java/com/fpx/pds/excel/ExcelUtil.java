@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2005-2018. 4PX and/or its affiliates. All rights reserved.
- * Use,Copy is subject to authorized license.
- */
+
 package com.fpx.pds.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -46,6 +43,7 @@ public class ExcelUtil {
                 for (int i = 1; i <= rsRows; i++) {
                     Object[] obj = new Object[rsColumns];
                     Row row = readsheet.getRow(i);
+                    if (null == row) continue;
                     Iterator<Cell> iterator = row.cellIterator();
                     while (iterator.hasNext()) {
                         Cell cell = iterator.next();
