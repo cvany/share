@@ -27,7 +27,6 @@ public class MongoPageHelper {
     public static final String ID = "_id";
     private final MongoTemplate mongoTemplate;
 
-    @Autowired
     public MongoPageHelper(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }

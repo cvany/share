@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class User implements Serializable {
     private String name;
     private Integer age;
+    //不能用list，因为在查询数据时，无法实例化
     private ArrayList<String> hobbies;
     private ArrayList<String> addr;
 }
