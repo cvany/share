@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -69,5 +71,14 @@ public class DemoTest {
         } finally {
             System.out.println("这里还执行吗");
         }
+    }
+
+    @Test
+    public void test6() {
+        Map<String, Integer> map = new HashMap(2);
+        int number = 1;
+        map.put("pageSize", 3000);
+        map.put("pageNum", 10 / 3000 + 1);
+        System.out.println(map.get("pageNum"));
     }
 }

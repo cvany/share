@@ -1,4 +1,4 @@
-package com.fpx.pds.share;
+package com.fpx.pds;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
