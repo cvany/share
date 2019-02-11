@@ -39,7 +39,7 @@ public class IUserServiceTest extends ShareApplicationTests {
     @Test
     public void page() {
         UserVO vo = new UserVO();
-        vo.setPageNum(3);
+        vo.setPageNum(1);
         vo.setPageSize(10);
         PageResult<User> page = iUserService.page(vo);
         System.out.println(page.getList().size());

@@ -20,8 +20,11 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     IUserRepository iUserRepository;
+//    @Resource
+//    MongoTemplate mongoTemplate;
+
     @Resource
-    MongoTemplate mongoTemplate;
+    MongoPageUtil mongoPageUtil;
 
     @Override
     public User save(User user) {
@@ -30,7 +33,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public PageResult<User> page(UserVO vo) {
-        MongoPageHelper helper = new MongoPageHelper(mongoTemplate);
-        return helper.pageQuery(vo, User.class, vo.getPageSize(), vo.getPageNum());
+//        MongoPageHelper helper = new MongoPageHelper(mongoTemplate);
+//        return helper.pageQuery(vo, User.class, vo.getPageSize(), vo.getPageNum());
+        return mongoPageUtil.pageQuery(vo, User.class, vo.getPageSize(), vo.getPageNum());
     }
 }

@@ -7,39 +7,38 @@ package com.fpx.pds.mongo;
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 通用型
+ * 耦合型
  *
  * @Author: cuiwy
  * @Date: 2019/1/28 17:04
  * @version: v1.0.0
  */
-public class MongoPageHelper {
-    public static final int FIRST_PAGE_NUM = 1;
-    public static final String ID = "_id";
-    private final MongoTemplate mongoTemplate;
-
-    public MongoPageHelper(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+@Component
+public class MongoPageUtil {
+    private static final int FIRST_PAGE_NUM = 1;
+    private static final String ID = "_id";
+    @Resource
+    private MongoTemplate mongoTemplate;
 
 
     /**
      * 分页查询，直接返回集合类型的结果.
      *
-     * @see MongoPageHelper#pageQuery(org.springframework.data.mongodb.core.query.Query,
-     * java.lang.Class, java.util.function.Function, java.lang.Integer, java.lang.Integer,
-     * java.lang.String)
+     * @see MongoPageUtil#pageQuery(Query,
+     * Class, Function, Integer, Integer,
+     * String)
      */
     public <T> PageResult<T> pageQuery(Query query, Class<T> entityClass, Integer pageSize,
                                        Integer pageNum) {
@@ -49,9 +48,9 @@ public class MongoPageHelper {
     /**
      * 分页查询，不考虑条件分页，直接使用skip-limit来分页.
      *
-     * @see MongoPageHelper#pageQuery(org.springframework.data.mongodb.core.query.Query,
-     * java.lang.Class, java.util.function.Function, java.lang.Integer, java.lang.Integer,
-     * java.lang.String)
+     * @see MongoPageUtil#pageQuery(Query,
+     * Class, Function, Integer, Integer,
+     * String)
      */
     public <T, R> PageResult<R> pageQuery(Query query, Class<T> entityClass, Function<T, R> mapper,
                                           Integer pageSize, Integer pageNum) {
