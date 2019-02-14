@@ -1,9 +1,12 @@
 
 package com.fpx.pds.share;
 
+import com.fpx.pds.ShareApplicationTests;
+import com.fpx.pds.domain.Entity;
 import com.fpx.pds.utils.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,7 +19,7 @@ import java.util.Map;
  * @version: v1.0.0
  */
 @Slf4j
-public class DemoTest {
+public class DemoTest extends ShareApplicationTests {
 
     @Test
     public void test1() {
@@ -80,5 +83,15 @@ public class DemoTest {
         map.put("pageSize", 3000);
         map.put("pageNum", 10 / 3000 + 1);
         System.out.println(map.get("pageNum"));
+    }
+
+    @Autowired
+    Entity entity;
+
+    @Test
+    public void test7() {
+        String name = entity.getName();
+        System.out.println(name);
+
     }
 }
