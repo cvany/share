@@ -129,7 +129,7 @@ public class IRedisUtil {
      * @param hashKey
      * @param value
      */
-    public void hmSet(String key, Object hashKey, Object value) {
+    public void hSet(String key, Object hashKey, Object value) {
         HashOperations<String, Object, Object> hash = redisTemplate.opsForHash();
         hash.put(key, hashKey, value);
     }
@@ -141,7 +141,7 @@ public class IRedisUtil {
      * @param hashKey
      * @return
      */
-    public Object hmGet(String key, Object hashKey) {
+    public Object hGet(String key, Object hashKey) {
         HashOperations<String, Object, Object> hash = redisTemplate.opsForHash();
         return hash.get(key, hashKey);
     }
@@ -176,7 +176,7 @@ public class IRedisUtil {
      * @param key
      * @param value
      */
-    public void add(String key, Object value) {
+    public void sAdd(String key, Object value) {
         SetOperations<String, Object> set = redisTemplate.opsForSet();
         set.add(key, value);
     }
@@ -187,7 +187,7 @@ public class IRedisUtil {
      * @param key
      * @return
      */
-    public Set<Object> setMembers(String key) {
+    public Set<Object> sGet(String key) {
         SetOperations<String, Object> set = redisTemplate.opsForSet();
         return set.members(key);
     }
