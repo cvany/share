@@ -1,11 +1,16 @@
 
 package com.fpx.pds.share;
 
+import com.fpx.pds.ShareApplicationTests;
+import com.fpx.pds.domain.Entity;
 import com.fpx.pds.utils.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -14,7 +19,7 @@ import java.util.Date;
  * @version: v1.0.0
  */
 @Slf4j
-public class DemoTest {
+public class DemoTest extends ShareApplicationTests {
 
     @Test
     public void test1() {
@@ -69,5 +74,24 @@ public class DemoTest {
         } finally {
             System.out.println("这里还执行吗");
         }
+    }
+
+    @Test
+    public void test6() {
+        Map<String, Integer> map = new HashMap(2);
+        int number = 1;
+        map.put("pageSize", 3000);
+        map.put("pageNum", 10 / 3000 + 1);
+        System.out.println(map.get("pageNum"));
+    }
+
+    @Autowired
+    Entity entity;
+
+    @Test
+    public void test7() {
+        String name = entity.getName();
+        System.out.println(name);
+
     }
 }
