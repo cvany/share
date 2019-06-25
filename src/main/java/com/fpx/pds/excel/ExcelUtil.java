@@ -53,7 +53,12 @@ public class ExcelUtil {
                     iterator = null;
                     for (int j = 0; j < rsColumns; j++) {
                         Cell cell = row.getCell(j);
-                        obj[j] = cell.getStringCellValue();
+                        if (null == cell) {
+                            //置为空串，占位置
+                            obj[j] = "";
+                        } else {
+                            obj[j] = cell.getStringCellValue();
+                        }
                     }
                     returnList.add(obj);
                 }

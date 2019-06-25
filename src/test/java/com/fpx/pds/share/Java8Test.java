@@ -6,6 +6,12 @@ package com.fpx.pds.share;
 
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,4 +86,74 @@ public class Java8Test {
         int count = (int) strings.parallelStream().filter(string -> string.isEmpty()).count();
         System.out.println(count);
     }
+
+
+    @Test
+    public void test4() {
+        long s = System.currentTimeMillis();
+        int a = 1;
+        for (int i = 0; i < 10000000; i++) {
+            a++;
+        }
+        long e = System.currentTimeMillis();
+        System.out.println(a);
+        System.out.println("耗时：" + (e - s) + "ms");
+    }
+
+    @Test
+    public void test5() throws IOException {
+        RandomAccessFile aFile = new RandomAccessFile("data/nio-data.txt", "rw");
+        FileChannel inChannel = aFile.getChannel();
+
+//        inChannel.position();
+//        inChannel.size();
+        inChannel.force(true);
+        //create buffer with capacity of 48 bytes
+        ByteBuffer buf = ByteBuffer.allocate(48);
+
+        int bytesRead = inChannel.read(buf); //read into buffer.
+        while (bytesRead != -1) {
+
+            buf.flip();  //make buffer ready for read
+
+            while (buf.hasRemaining()) {
+                System.out.print((char) buf.get()); // read 1 byte at a time
+            }
+
+            buf.clear(); //make buffer ready for writing
+//            buf.compact();
+//            buf.mark();
+//            buf.reset();
+//            buf.equals()
+//            buf.compareTo()
+            bytesRead = inChannel.read(buf);
+        }
+        aFile.close();
+    }
+
+    @Test
+    public void test6() throws IOException {
+        Selector selector = Selector.open();
+        SocketChannel socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+        socketChannel.register(selector, SelectionKey.OP_READ);
+        selector.select();
+
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        socketChannel.write(byteBuffer);
+
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        serverSocketChannel.accept();
+    }
+
+    @Test
+    public void test7() throws InterruptedException, IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        reader.readLine();
+    }
+
+
+
+
 }
