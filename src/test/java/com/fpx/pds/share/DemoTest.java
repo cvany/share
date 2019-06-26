@@ -8,9 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 /**
@@ -92,6 +94,13 @@ public class DemoTest extends ShareApplicationTests {
     public void test7() {
         String name = entity.getName();
         System.out.println(name);
+    }
 
+    @Test
+    public void test8() {
+        Scanner scanner =new Scanner(System.in);
+        String s = scanner.nextLine();
+        System.out.println(s);
+//        ThreadPoolExecutor
     }
 }

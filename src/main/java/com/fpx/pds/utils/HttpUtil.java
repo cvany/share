@@ -1,24 +1,47 @@
 
 package com.fpx.pds.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: cuiwy
  * @Date: 2018/12/12 17:45
  * @version: v1.0.0
  */
+@Slf4j
 public class HttpUtil {
     private final static RestTemplate restTemplate = new RestTemplate();
 
+    private final static HttpClient httpClient = new DefaultHttpClient();
+
     static {
         //解决响应内容出现乱码问题
-        reInitMessageConverter(restTemplate);
+//        reInitMessageConverter(restTemplate);
     }
 
     private static void reInitMessageConverter(RestTemplate restTemplate) {
@@ -33,8 +56,22 @@ public class HttpUtil {
         if (converterTarget != null) {
             converterList.remove(converterTarget);
         }
-        HttpMessageConverter<?> converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+//        HttpMessageConverter<?> converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        HttpMessageConverter<?> converter = new FastJsonHttpMessageConverter();
         converterList.add(converter);
+    }
+
+    /**
+     * 根据url地址获取二进制流
+     *
+     * @param url
+     * @return
+     */
+    public static InputStream get(String url) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<byte[]>(headers), byte[].class);
+        byte[] result = response.getBody();
+        return new ByteArrayInputStream(result);
     }
 
     /**
@@ -51,9 +88,58 @@ public class HttpUtil {
      * POST请求
      *
      * @param url
-     * @param param
+     * @param headers
      */
-    public static void post(String url, String param) {
+    public static String post(String url, String json, HttpHeaders headers) {
+        HttpEntity httpEntity = new HttpEntity<>(json, headers);
+        JSONObject response = restTemplate.postForObject(url, httpEntity, JSONObject.class);
+        return JSON.toJSONString(response);
+    }
 
+    public static String postJsonWithHeaders(String url, Object params, Map<String, String> headers) throws HttpClientErrorException {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost = (HttpPost) setHeaders(httpPost, headers);
+        httpPost.addHeader("Content-Type", "application/json");
+        if (params != null) {
+            String paramStr = JSON.toJSONString(params);
+            httpPost.setEntity(new StringEntity(paramStr, Charset.forName("UTF-8")));
+        }
+
+        CloseableHttpResponse response = null;
+
+        String var5 = "";
+        try {
+            response = (CloseableHttpResponse) httpClient.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new HttpClientErrorException(HttpStatus.valueOf(response.getStatusLine().getStatusCode()));
+            }
+
+            var5 = EntityUtils.toString(response.getEntity());
+        } catch (IOException var14) {
+            log.error("response exception:{}", var14);
+        } finally {
+            try {
+                if (response != null) {
+                    response.close();
+                }
+            } catch (IOException var13) {
+                var13.printStackTrace();
+            }
+
+        }
+
+        return var5;
+    }
+
+    private static HttpRequestBase setHeaders(HttpRequestBase request, Map<String, String> headers) {
+        Iterator<String> keyIterator = headers.keySet().iterator();
+        String key = null;
+
+        while (keyIterator.hasNext()) {
+            key = (String) keyIterator.next();
+            request.addHeader(key, (String) headers.get(key));
+        }
+
+        return request;
     }
 }
