@@ -19,7 +19,8 @@ public class Lucky {
      */
     @Test
     public void luck() {
-        List<Map<String, List>> list = enter(1, "");
+//        List<Map<String, List>> list = enter(1, Constant.WELFARECOLOR);
+        List<Map<String, List>> list = enter(1, Constant.MARKSIX);
         System.out.println(JSON.toJSONString(list));
         System.out.println();
     }

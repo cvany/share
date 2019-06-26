@@ -4,6 +4,7 @@
  */
 package com.fpx.pds.download;
 
+import com.fpx.pds.utils.TimeUtil;
 import org.assertj.core.util.Lists;
 
 import java.io.*;
@@ -26,7 +27,7 @@ public class FilmDownload {
 
 
     public static void main(String[] args) {
-        String downloadUrl = "https://youku.com-a-youku.com/20190622/7641_a4e91bb2/1000k/hls/";
+        String downloadUrl = "https://56.com-t-56.com/20190529/23101_a3d0987b/1000k/hls/";
         String seedFile = "D:\\index.m3u8";
         enter(downloadUrl, seedFile);
 //        combineTask();
@@ -41,7 +42,7 @@ public class FilmDownload {
         //用线程池开启下载
         download(list);
         long end = System.currentTimeMillis();
-        System.out.println("下载已经完成，耗时：" + (end - start) / 1000 + " s");
+        System.out.println("下载已经完成，耗时：" + TimeUtil.comsumeTime(end-start));
         DownloadExecutors.getExecutorService().shutdown();
     }
 
