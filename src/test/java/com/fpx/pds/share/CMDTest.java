@@ -4,10 +4,14 @@
  */
 package com.fpx.pds.share;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.apache.commons.lang.StringUtils;
+import org.assertj.core.util.Lists;
+
+import java.io.*;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: cuiwy
@@ -33,26 +37,49 @@ public class CMDTest {
         System.out.println("合并命令已经执行完毕，开始执行删除命令");
 //        runtime.exec("cmd /c rd /s/q D:\\222\\temp");*/
 
-      test();
+        test();
     }
 
-    private static void test(){
-        int count =0;
+    private static void test() {
+        String fileName = "C:\\Users\\cuiwy.4PXAD\\Desktop\\catalo.txt";
+        List<Map<String, String>> mapList = resolueFile(fileName);
+        System.out.println(mapList.size());
+    }
 
-        while (count<5){
-            try {
-                System.out.println("请求url"+count);
-                int i =1/0;
-            } catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+    private static List<Map<String, String>> resolueFile(String fileName) {
+        File file = new File(fileName);
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
+            String item = null;
+            List<Map<String, String>> result = Lists.newArrayList();
+            Map<String, String> map = null;
+            while ((item = reader.readLine()) != null) {
+                if (StringUtils.isNotBlank(item)) {
+                    map = new HashMap<>(2);
+                    String[] array = item.replaceAll(" +", "#").split("#");
+                    if (array.length > 2) {
+                        map.put("url", array[1]);
+                        map.put("path", array[2]);
+                        result.add(map);
+                    } else {
+                        map.put("url", array[0]);
+                        map.put("path", array[1]);
+                        result.add(map);
+                    }
                 }
-                count++;
-                System.out.println(count+"次尝试");
+            }
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
             }
         }
+        return null;
     }
 }

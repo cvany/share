@@ -5,12 +5,15 @@
 package com.fpx.pds.download;
 
 import com.fpx.pds.utils.TimeUtil;
+import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -27,23 +30,101 @@ public class FilmDownload {
 
 
     public static void main(String[] args) {
-        String downloadUrl = "https://56.com-t-56.com/20190529/23101_a3d0987b/1000k/hls/";
+        //是否批量下载
+        Boolean isBatchDownload = false;
+        String batchDownloadFilePath = "";
+
+        //单个下载，默认方式
+        String downloadUrl = "https://youku163.zuida-bofang.com/20190113/24326_e382b440/800k/hls/";
         String seedFile = "D:\\index.m3u8";
-        enter(downloadUrl, seedFile);
-//        combineTask();
+        if (isBatchDownload) {
+            batchDownload(batchDownloadFilePath);
+        } else {
+            simpleDownload(downloadUrl, seedFile);
+        }
     }
 
-    private static void enter(String downloadUrl, String filePath) {
-        SOURCE = downloadUrl;
+    /**
+     * 批量下载（串行化：即下载完一个电影才能下载另一个）
+     *
+     * @param filePath
+     */
+    public static void batchDownload(String filePath) {
+        List<Map<String, String>> mapList = resolueFile(filePath);
+        if (null != mapList) {
+            long start = System.currentTimeMillis();
+            for (Map<String, String> map : mapList) {
+                enter(map.get("url"), map.get("path"));
+            }
+            long end = System.currentTimeMillis();
+            System.out.println("【" + mapList.size() + "】任务下载已经完成，耗时：" + TimeUtil.comsumeTime(end - start));
+            DownloadExecutors.getExecutorService().shutdown();
+        }
+    }
 
+    /**
+     * 单个下载
+     *
+     * @param downloadUrl
+     * @param filePath
+     */
+    public static void simpleDownload(String downloadUrl, String filePath) {
         long start = System.currentTimeMillis();
+        enter(downloadUrl, filePath);
+        long end = System.currentTimeMillis();
+        System.out.println("单个任务下载已经完成，耗时：" + TimeUtil.comsumeTime(end - start));
+        DownloadExecutors.getExecutorService().shutdown();
+    }
+
+    private static List<Map<String, String>> resolueFile(String fileName) {
+        File file = new File(fileName);
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
+            String item = null;
+            List<Map<String, String>> result = Lists.newArrayList();
+            Map<String, String> map = null;
+            while ((item = reader.readLine()) != null) {
+                if (StringUtils.isNotBlank(item)) {
+                    map = new HashMap<>(2);
+                    String[] array = item.replaceAll(" +", "#").split("#");
+                    if (array.length > 2) {
+                        map.put("url", array[1]);
+                        map.put("path", array[2]);
+                        result.add(map);
+                    } else {
+                        map.put("url", array[0]);
+                        map.put("path", array[1]);
+                        result.add(map);
+                    }
+                }
+            }
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 下载入口
+     *
+     * @param downloadUrl
+     * @param filePath
+     */
+    public static void enter(String downloadUrl, String filePath) {
+        SOURCE = downloadUrl;
         //获取下载列表
         List<String> list = getDownloadList(filePath);
         //用线程池开启下载
         download(list);
-        long end = System.currentTimeMillis();
-        System.out.println("下载已经完成，耗时：" + TimeUtil.comsumeTime(end-start));
-        DownloadExecutors.getExecutorService().shutdown();
     }
 
     private static void download(List<String> list) {
