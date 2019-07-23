@@ -47,7 +47,7 @@ public class ExcelUtil {
                     Iterator<Cell> iterator = row.cellIterator();
                     while (iterator.hasNext()) {
                         Cell cell = iterator.next();
-                        cell.setCellType(Cell.CELL_TYPE_STRING);
+//                        cell.setCellType(Cell.CELL_TYPE_STRING);
                     }
                     //回收内存
                     iterator = null;
