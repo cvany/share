@@ -1,4 +1,4 @@
-package com.fpx.pds.excel.iexcel;
+package com.fpx.pds.excel.iexcel.entity;
 
 import com.github.houbb.iexcel.annotation.ExcelField;
 import lombok.Data;

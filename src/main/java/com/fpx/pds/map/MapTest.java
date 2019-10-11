@@ -12,8 +12,8 @@ import java.util.Map;
 public class MapTest {
 
     public static void main(String args[]) {
-        String address = AddressHelper.prettify("中国 广东省 深圳市 宝安区 石岩街道~~~广东省 深圳市 宝安区 石岩街道石龙社区工业二路一号惠科平板显示产业园7栋负一楼");
-        System.out.println(address);
+        String address = AddressHelper.prettify("中国 广东省 深圳市 宝安区 西乡街道~~~西乡鹤洲南片工业区2-3号阳光工业园C栋厂房B段第四层");
+//        System.out.println(address);
         try {
             Map<String, String> json = MapUtil.getGeocoderLatitude(address);
             System.out.println(json.get("lng") + "," + json.get("lat"));

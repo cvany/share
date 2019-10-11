@@ -9,7 +9,7 @@ import com.fpx.pds.utils.TimeUtil;
  */
 public class AESTest {
     public static void main(String[] args) {
-        String password = "190716";
+        String password = "[{\"apiCode\":\"DEV01543534\",\"apiHost\":\"127.0.0.1\",\"apiName\":\"DEV01\",\"apiPort\":\"8080\",\"apiType\":\"http\",\"apiUrl\":\"/api/pmm/signIn\",\"createTime\":1569480814000,\"id\":371,\"requestMethod\":\"POST\",\"stitching\":false}]";
         System.out.println("原字符：" + password);
         System.out.println("==========================");
         long start = System.currentTimeMillis();

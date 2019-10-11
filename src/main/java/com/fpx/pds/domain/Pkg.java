@@ -12,6 +12,7 @@ import java.util.Date;
  */
 @Data
 public class Pkg {
+    private Integer id;
     private String shippingNo;
     private String status;
     private Date inBoxTime;

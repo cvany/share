@@ -23,7 +23,7 @@ public class AESUtil {
     /**
      * 默认密钥
      */
-    private static String DEFAULT_KEY = "1234567890";
+    private static String DEFAULT_KEY = "zjyDYF0doPvD0xTDtYUc3w==&";
 
     /**
      * 加密
