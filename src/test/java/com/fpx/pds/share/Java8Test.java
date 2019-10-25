@@ -1,6 +1,7 @@
 
 package com.fpx.pds.share;
 
+import com.alibaba.fastjson.JSON;
 import com.fpx.pds.utils.TimeUtil;
 import org.junit.Test;
 
@@ -208,44 +209,44 @@ public class Java8Test {
      */
     @Test
     public void test11() {
-        Calendar c=Calendar.getInstance();
-        SimpleDateFormat df=new SimpleDateFormat("yyyy/MM/dd/E");
-        System.out.println("今天是:"+df.format(c.getTime()));
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/E");
+        System.out.println("今天是:" + df.format(c.getTime()));
 //        c.add(Calendar.DATE, 3);
 //        System.out.println("三天后:"+df.format(c.getTime()));
         c.add(Calendar.DATE, -3);
-        System.out.println("三天前:"+df.format(c.getTime()));
+        System.out.println("三天前:" + df.format(c.getTime()));
     }
 
     @Test
     public void test12() {
         Date date = new Date(1567740067005L);
-        SimpleDateFormat df=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         System.out.println(df.format(date));
     }
 
     @Test
     public void test13() {
-        StringBuilder builder =new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         builder.reverse();
-        String temp ="a00b";
-        char[] cha =temp.toCharArray();
-        cha[0] =0;
-        cha[1] =31;
-        cha[2] =34;
-        String str =new String(cha);
+        String temp = "a00b";
+        char[] cha = temp.toCharArray();
+        cha[0] = 0;
+        cha[1] = 31;
+        cha[2] = 34;
+        String str = new String(cha);
         System.out.println(str);
     }
 
     @Test
     public void test14() {
         long maxValue = Long.MAX_VALUE;
-        long minValue =Long.MIN_VALUE;
+        long minValue = Long.MIN_VALUE;
         System.out.println(maxValue);
         System.out.println(minValue);
-        int i = 1<< 31;
+        int i = 1 << 31;
         System.out.println(i);
-        System.out.println((int)('0'));
+        System.out.println((int) ('0'));
         System.out.println("9223372036854775808".length());
     }
 
@@ -261,7 +262,7 @@ public class Java8Test {
             long s = System.currentTimeMillis();
             TimeUnit.SECONDS.sleep(1);
             long currentTimeMillis = System.currentTimeMillis();
-            System.out.println((currentTimeMillis-s)+"ms");
+            System.out.println((currentTimeMillis - s) + "ms");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -269,11 +270,29 @@ public class Java8Test {
 
     @Test
     public void test17() {
-        String s="234234234234,5786";
-        String[] array = s.split(",");
+        String s = "234234234234,  5786  ,     ";
+        String[] array = s.replaceAll(" +", "").split(",");
         for (String ins : array) {
             System.out.println(ins);
         }
-        System.out.println();
+        System.out.println(array.length);
+    }
+
+    @Test
+    public void test18() {
+        TreeMap<String, Integer> map = new TreeMap<>();
+        map.put("A", 1);
+        map.put("B", 2);
+        map.put("C", 3);
+        System.out.println(JSON.toJSONString(map));
+        map.remove("A");
+    }
+
+    @Test
+    public void test19() {
+        // 10的相反数
+        System.out.println(10 & (~10 + 1));
+        System.out.println(Integer.toBinaryString(10));
+        System.out.println(Integer.toBinaryString(~10+1));
     }
 }
