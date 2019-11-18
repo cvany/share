@@ -580,13 +580,13 @@ public class RBMap2<K, V> {
 
     public static void main(String[] args) {
         RBMap2<Object, Integer> rbMap = new RBMap2<>();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 16; i++) {
             rbMap.put(i, i);
         }
-        for (int i = -8; i < 0; i++) {
+        /*for (int i = -8; i < 0; i++) {
             rbMap.put(i, i);
         }
-        rbMap.remove(3);
+        rbMap.remove(3);*/
    /*  rbMap.put("A",1);
        rbMap.put("C",1);
        rbMap.put("D",1);
@@ -625,7 +625,7 @@ public class RBMap2<K, V> {
             System.out.print(p.str);
         }
 
-        private static void traversalPrint(Entry root, Trunk prev, boolean isLeft) {
+        private static void traversalPrint(Entry root, Trunk prev, boolean isRight) {
             if (root == null)
                 return;
 
@@ -642,12 +642,11 @@ public class RBMap2<K, V> {
             String prev_str = CHILD_PREV;
             Trunk trunk = new Trunk(prev, prev_str);
 
-            // 遍历左子树
             traversalPrint(root.right, trunk, true);
 
             if (prev == null)
                 trunk.str = ROOT_PREV;
-            else if (isLeft) {
+            else if (isRight) {
                 trunk.str = RIGHT_CHILD_CURVED_EDGE;
                 prev_str = RIGHT_CHILD_STRAIGHT_EDGE;
             } else {
@@ -668,7 +667,6 @@ public class RBMap2<K, V> {
 
             trunk.str = LEFT_CHILD_STRAIGHT_EDGE;
 
-            // 遍历右子树
             traversalPrint(root.left, trunk, false);
         }
 

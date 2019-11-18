@@ -1,0 +1,10 @@
+### 演示POST请求
+
+POST {{baseUrl}}}get?show_env=1
+Accept: application/json
+
+{
+   "name":"a"
+}
+
+###

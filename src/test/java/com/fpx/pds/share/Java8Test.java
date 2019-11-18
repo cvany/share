@@ -293,6 +293,18 @@ public class Java8Test {
         // 10的相反数
         System.out.println(10 & (~10 + 1));
         System.out.println(Integer.toBinaryString(10));
-        System.out.println(Integer.toBinaryString(~10+1));
+        System.out.println(Integer.toBinaryString(~10 + 1));
+    }
+
+    @Test
+    public void test20() {
+        System.out.println(Math.random() > 0.5);
+    }
+
+    @Test
+    public void test21() {
+        //1英镑 ==0.45359237千克（1 LB ==0.45359237 KG ==453.59237 G）
+        double g = 453.59237;
+        System.out.println(2240/g);
     }
 }
